@@ -1,1 +1,4 @@
 project_id = "uaswsgzvbyqiotbzcjfv"
+
+[functions.cloudinary-signature]
+verify_jwt = false
