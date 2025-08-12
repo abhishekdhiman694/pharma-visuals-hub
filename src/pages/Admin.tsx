@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { categories } from "@/data/products";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import AdminAccessGate from "@/components/auth/AdminAccessGate";
 
 const Admin = () => {
   const [name, setName] = useState("");
@@ -97,38 +98,40 @@ const Admin = () => {
         </div>
       </header>
       <main className="container mx-auto px-6 py-10">
-        <Card className="max-w-2xl p-6">
-          <form onSubmit={onSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="name">Product name</Label>
-              <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g., CalciFlex Tabs" />
-            </div>
-            <div className="space-y-2">
-              <Label>Category</Label>
-              <Select value={categoryId} onValueChange={setCategoryId}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((c) => (
-                    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="images">Images</Label>
-              <Input id="images" type="file" multiple accept="image/*" onChange={(e) => setFiles(Array.from(e.target.files || []))} />
-              <p className="text-xs text-muted-foreground">Images are securely uploaded via Cloudinary.</p>
-            </div>
-            <div className="flex gap-3">
-              <Button type="submit" variant="hero">Save product</Button>
-              <Button type="button" variant="outline" asChild>
-                <a href="/">Back to app</a>
-              </Button>
-            </div>
-          </form>
-        </Card>
+        <AdminAccessGate>
+          <Card className="max-w-2xl p-6">
+            <form onSubmit={onSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="name">Product name</Label>
+                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g., CalciFlex Tabs" />
+              </div>
+              <div className="space-y-2">
+                <Label>Category</Label>
+                <Select value={categoryId} onValueChange={setCategoryId}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map((c) => (
+                      <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="images">Images</Label>
+                <Input id="images" type="file" multiple accept="image/*" onChange={(e) => setFiles(Array.from(e.target.files || []))} />
+                <p className="text-xs text-muted-foreground">Images are securely uploaded via Cloudinary.</p>
+              </div>
+              <div className="flex gap-3">
+                <Button type="submit" variant="hero">Save product</Button>
+                <Button type="button" variant="outline" asChild>
+                  <a href="/">Back to app</a>
+                </Button>
+              </div>
+            </form>
+          </Card>
+        </AdminAccessGate>
       </main>
     </div>
   );

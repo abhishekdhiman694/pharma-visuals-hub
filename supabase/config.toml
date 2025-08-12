@@ -2,3 +2,6 @@ project_id = "uaswsgzvbyqiotbzcjfv"
 
 [functions.cloudinary-signature]
 verify_jwt = false
+
+[functions.grant-admin]
+verify_jwt = true
