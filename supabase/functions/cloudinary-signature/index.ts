@@ -28,9 +28,9 @@ Deno.serve(async (req) => {
   try {
     const { folder } = await req.json().catch(() => ({ folder: 'products' }));
 
-    const cloudName = Deno.env.get('CLOUDINARY_CLOUD_NAME');
-    const apiKey = Deno.env.get('CLOUDINARY_API_KEY');
-    const apiSecret = Deno.env.get('CLOUDINARY_API_SECRET');
+    const cloudName = Deno.env.get('CLOUDINARY_CLOUD_NAME') ?? Deno.env.get('CLOUD_NAME');
+    const apiKey = Deno.env.get('CLOUDINARY_API_KEY') ?? Deno.env.get('API_KEY');
+    const apiSecret = Deno.env.get('CLOUDINARY_API_SECRET') ?? Deno.env.get('API_SECRET');
 
     if (!cloudName || !apiKey || !apiSecret) {
       console.error('Missing Cloudinary secrets.');
